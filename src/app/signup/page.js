@@ -28,8 +28,7 @@ export default function Signup() {
       if (res.ok) {
         console.log('User created successfully!');
         console.log('JWT Token:', data.token);
-        localStorage.setItem('token', data.token);
-        router.push('/');
+        router.push('/login');
       } else {
         setError(data.message);
       }

@@ -26,7 +26,8 @@ export default function Login() {
         console.log('Login successful!');
         console.log('JWT Token:', data.token);
         localStorage.setItem('token', data.token);
-        router.push('/');
+        localStorage.setItem('userName', data.name);
+        router.push('/dashboard');
       } else {
         setError(data.message);
       }

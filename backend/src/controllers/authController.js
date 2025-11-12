@@ -53,10 +53,23 @@ const loginUser = async (req, res) => {
 
     const tokens = generateToken(user.id);
     res.cookie('token', tokens.accessTokens, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', maxAge: 24 * 60 * 60 * 1000 });
-    return res.status(200).json({ message: "Login successful!", token: tokens.accessTokens });
+    return res.status(200).json({ message: "Login successful!", token: tokens.accessTokens, name: user.name });
   } catch (err) {
     return res.status(500).json({ message: "Server Error!" });
   }
 };
 
-module.exports = { signupUser, loginUser };
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await prisma.users.findUnique({ where: { id: parseInt(id) } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    return res.status(200).json({ name: user.name, email: user.email });
+  } catch (err) {
+    return res.status(500).json({ message: "Server Error!" });
+  }
+};
+
+module.exports = { signupUser, loginUser, getUser };
