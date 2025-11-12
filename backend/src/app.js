@@ -6,7 +6,7 @@ const authRoutes = require("./routes/authRouts.js")
 
 const app = express();
 
-const allowedOrigins = ['https://medi-care-pied-two.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://mycampusdeals.vercel.app'];
 
 app.use(cors({
   origin: allowedOrigins,
